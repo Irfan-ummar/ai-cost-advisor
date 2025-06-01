@@ -1,0 +1,34 @@
+===================  AI COST ADVISOR  KB  (2025-06-01)  =================
+
+PRICING SNAPSHOT  (offline reference, update monthly)
+Model             | IN $/1K | OUT $/1K | Latency
+GPT-4.1           | 0.030   | 0.060    | 1.00 s
+GPT-4.1-mini      | 0.002   | 0.008    | 0.40 s
+GPT-3.5-turbo     | 0.0005  | 0.0015   | 0.30 s
+Claude-Haiku 3.5  | 0.0008  | 0.0040   | 0.28 s
+Gemini 1.5 Pro    | 0.0007  | 0.0021   | 0.35 s
+Nova-1 (Bedrock)  | 0.001   | 0.003    | 0.25 s
+
+
+OPTIMISATION TOOLBOX  (token / cost saving %)
+Prompt tightening 10-40 · RAG 20-70 · Caching 5-25 · Router 30-90 · Batch 15-50
+
+ARCHITECTURE PATTERNS (cheapest → pricey)
+Single-Agent+Tool · RAG-Pipeline · Fine-Tuned Small Model (7-B) · Escalation Agent · Manager→Workers · Vision Agent
+
+OFFLINE BENCHMARKS  (mock URLs but realistic claims)
+Source | Take-away | URL  
+McKinsey 2025 02 | AI cuts 25–35 % OPEX in property mgmt | https://mock.mckinsey.com/realestate-ai  
+CBRE PropTech 2025 | Chatbot deflects 60 % tenant queries | https://mock.cbre.com/chatbot  
+AWS Gen-AI Pillar 2025 | Model router saves ≈65 % inference bill | https://mock.aws.com/router  
+OpenAI Blog 2025-03 | Prompt compression ⇒ 28 % fewer tokens | https://mock.openai.com/compress  
+Gartner 2025 | Oversized models biggest waste | https://mock.gartner.com/oversize
+
+ROI QUICK RULE  
+If AI saves ≥4 min human work and LLM fee < $0.05 → ROI positive at $50/h wage.
+
+EXAMPLE Q→A OUTLINES  
+Q1 Marketing agency … → area table, diagram, cost table, research bullets.  
+Q2 Sales email cost … → price list, maths, 97 % saving.
+
+======================================================================
