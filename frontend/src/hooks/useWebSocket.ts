@@ -84,14 +84,14 @@ export const useWebSocket = () => {
     }
 
     try {
-      const wsUrl = `ws://${process.env.NEXT_PUBLIC_WS_HOST || 'localhost:8000'}/ws/chat/`;
+      const wsUrl = `wss://${process.env.NEXT_PUBLIC_WS_HOST }/ws/chat/`;
       
       console.log('Connecting to WebSocket:', wsUrl);
       
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
-      
+
       wsRef.current.onopen = () => {
         console.log('WebSocket connected');
         setChatState(prev => ({ ...prev, isConnected: true }));
