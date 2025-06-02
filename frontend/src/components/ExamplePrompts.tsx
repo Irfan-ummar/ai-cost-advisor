@@ -41,7 +41,7 @@ const examplePrompts = [
   {
     icon: Sparkles,
     category: "Innovation",
-    prompt: "How can AI give us a competitive advantage in our industry?",
+    prompt: "How can AI give us a competitive advantage in our industry ?",
     color: "bg-pink-50 border-pink-200 hover:bg-pink-100 text-pink-800"
   }
 ];
