@@ -3,8 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { WebSocketMessage, ChatState } from '@/types/chat';
 
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8000/ws/chat/';
-
 export const useWebSocket = () => {
   const [chatState, setChatState] = useState<ChatState>({
     messages: [],
@@ -16,54 +14,9 @@ export const useWebSocket = () => {
   });
 
   const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttemptsRef = useRef(0);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const maxReconnectAttempts = 3;
-
-  const connect = useCallback(() => {
-    try {
-      wsRef.current = new WebSocket(WS_URL);
-
-      wsRef.current.onopen = () => {
-        console.log('WebSocket connected');
-        setChatState(prev => ({ ...prev, isConnected: true }));
-        reconnectAttemptsRef.current = 0;
-      };
-
-      wsRef.current.onmessage = (event) => {
-        try {
-          const data: WebSocketMessage = JSON.parse(event.data);
-          handleWebSocketMessage(data);
-        } catch (error) {
-          console.error('Error parsing WebSocket message:', error);
-        }
-      };
-
-      wsRef.current.onclose = () => {
-        console.log('WebSocket disconnected');
-        setChatState(prev => ({ ...prev, isConnected: false, isTyping: false }));
-        
-        // Attempt to reconnect
-        if (reconnectAttemptsRef.current < maxReconnectAttempts) {
-          reconnectAttemptsRef.current++;
-          reconnectTimeoutRef.current = setTimeout(() => {
-            console.log(`Reconnecting... Attempt ${reconnectAttemptsRef.current}`);
-            connect();
-          }, 2000);
-        } else {
-          console.error('Max reconnection attempts reached');
-          // Show modal or notification to user
-        }
-      };
-
-      wsRef.current.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
-
-    } catch (error) {
-      console.error('Error connecting to WebSocket:', error);
-    }
-  }, []);
 
   const handleWebSocketMessage = useCallback((data: WebSocketMessage) => {
     switch (data.type) {
@@ -124,6 +77,62 @@ export const useWebSocket = () => {
         console.warn('Unknown message type:', data.type);
     }
   }, []);
+
+  const connect = useCallback(async () => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      return;
+    }
+
+    try {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${protocol}//${process.env.NEXT_PUBLIC_WS_HOST || 'localhost:8000'}/ws/chat/`;
+      
+      console.log('Connecting to WebSocket:', wsUrl);
+      
+      const ws = new WebSocket(wsUrl);
+      wsRef.current = ws;
+
+      wsRef.current.onopen = () => {
+        console.log('WebSocket connected');
+        setChatState(prev => ({ ...prev, isConnected: true }));
+        reconnectAttemptsRef.current = 0;
+      };
+
+      wsRef.current.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          console.log('Received WebSocket message:', data);
+          handleWebSocketMessage(data);
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
+      };
+
+      wsRef.current.onclose = () => {
+        console.log('WebSocket disconnected');
+        setChatState(prev => ({ ...prev, isConnected: false, isTyping: false }));
+        
+        // Attempt to reconnect
+        if (reconnectAttemptsRef.current < maxReconnectAttempts) {
+          reconnectAttemptsRef.current++;
+          reconnectTimeoutRef.current = setTimeout(() => {
+            console.log(`Reconnecting... Attempt ${reconnectAttemptsRef.current}`);
+            connect();
+          }, 2000);
+        } else {
+          console.error('Max reconnection attempts reached');
+          // Show modal or notification to user
+        }
+      };
+
+      wsRef.current.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+
+    } catch (error) {
+      console.error('Error connecting to WebSocket:', error);
+    }
+  }, [handleWebSocketMessage]);
 
   const parseDeckSections = (text: string) => {
     console.log('Parsing deck sections from text:', text.substring(0, 200) + '...');

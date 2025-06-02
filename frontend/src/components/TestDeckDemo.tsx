@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import DeckCard from './DeckCard';
-import { DeckSection } from '@/types/chat';
 
 // Sample AI response for testing deck functionality - updated to match actual response format
 const sampleResponse = `Session metadata details are not necessary for our planning. Instead, here's a comprehensive plan tailored to integrate AI agents into your marketing agency to enhance efficiency and cut costs.

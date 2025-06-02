@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function AIProviders() {
   return (
     <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
@@ -10,16 +12,20 @@ export default function AIProviders() {
           <div className="absolute left-0 top-0 space-y-4">
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 mb-2 mx-auto overflow-hidden">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=64&h=64&fit=crop&crop=face" 
                   alt="Patient"
+                  width={64}
+                  height={64}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-red-500 mx-auto overflow-hidden">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=48&h=48&fit=crop&crop=face" 
                   alt="Patient 2"
+                  width={48}
+                  height={48}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -40,16 +46,20 @@ export default function AIProviders() {
           <div className="absolute right-0 top-0 space-y-4">
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 mb-2 mx-auto overflow-hidden">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=64&h=64&fit=crop&crop=face" 
                   alt="Provider"
+                  width={64}
+                  height={64}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 mx-auto overflow-hidden">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=48&h=48&fit=crop&crop=face" 
                   alt="Provider 2"
+                  width={48}
+                  height={48}
                   className="w-full h-full object-cover"
                 />
               </div>
