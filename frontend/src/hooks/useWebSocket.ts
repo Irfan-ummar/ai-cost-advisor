@@ -91,6 +91,7 @@ export const useWebSocket = () => {
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
+      
       wsRef.current.onopen = () => {
         console.log('WebSocket connected');
         setChatState(prev => ({ ...prev, isConnected: true }));
