@@ -17,13 +17,17 @@ _min_request_interval = 2.0  # Minimum 2 seconds between requests
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         """Accept WebSocket connection and initialize session"""
+        # Log connection attempt
+        logger.info(f"WebSocket connection attempt from: {self.scope.get('client', 'unknown')}")
+        logger.info(f"Headers: {dict(self.scope.get('headers', []))}")
+        
         # Accept the connection first
         await self.accept()
         
         # Initialize session data
         await self.init_session_data()
         
-        logger.info(f"WebSocket connection established")
+        logger.info(f"WebSocket connection established successfully")
 
     async def disconnect(self, close_code):
         """Handle WebSocket disconnection"""
