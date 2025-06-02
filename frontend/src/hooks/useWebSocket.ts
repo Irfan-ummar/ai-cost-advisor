@@ -85,7 +85,7 @@ export const useWebSocket = () => {
 
     try {
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const wsUrl = `${protocol}//${process.env.NEXT_PUBLIC_WS_HOST || 'localhost:8000'}/ws/chat/`;
+      const wsUrl = `${protocol}//${process.env.NEXT_PUBLIC_WS_HOST }/ws/chat/`;
       
       console.log('Connecting to WebSocket:', wsUrl);
       
